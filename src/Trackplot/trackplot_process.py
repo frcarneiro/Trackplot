@@ -115,8 +115,12 @@ def process(arguments: trackplotArguments, list_proc, skip_list) -> None:
 				#Including Vessel Name on attribute table
 				CRP_df['Vessel']=arguments.vessel_name
 
+
+
 				#Converting csv file to gemotry and creating a geopandas
 				points=CRP_df.apply(lambda row: Point(row.Easting, row.Northing),axis=1)
+
+
 				#azimuth(easting_start, northing_start, easting_end, northing_end)
 				CRP_shp_points=gpd.GeoDataFrame(CRP_df,geometry=points)
 
@@ -125,7 +129,6 @@ def process(arguments: trackplotArguments, list_proc, skip_list) -> None:
 
 				#Creating a decimate point file every tolerance meters
 				decimate_CRP=CRP_shp_points[CRP_shp_points['distance']%interval < tolerance]
-				decimate_CRP.to_csv('decimate.csv')
 				decimate_CRP['distance']=decimate_CRP['distance'].astype(int)
 				decimate_CRP.drop_duplicates(subset='distance',keep='first',inplace=True)
 
@@ -142,7 +145,6 @@ def process(arguments: trackplotArguments, list_proc, skip_list) -> None:
 
 				#First line information for line attribute table
 				CRP_line=CRP_df.iloc[:1]
-
 
 
 				#Converting Line string to geopandas geometry format
