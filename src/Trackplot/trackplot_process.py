@@ -82,8 +82,11 @@ def process(arguments: trackplotArguments, list_proc, skip_list) -> None:
 	tolerance=0.3
 	interval=int(arguments.interval)
 	print(interval)
+	#print(u'\xb0')
 
-	dfver = pd.read_csv(list_proc, header=None, names=['PathCheck'])
+	
+
+	dfver = pd.read_csv(list_proc, header=None, names=['PathCheck'],encoding='ISO-8859-1')
 	dfver.drop_duplicates(keep='last', inplace=True)
 	dfver.to_csv(list_proc, header=False, index=False)
 	s1 = set(dfver['PathCheck'].tolist())
@@ -272,6 +275,8 @@ def CRP2csv(path, outputFolder):
 		
 		df_CRP = pd.read_csv(SPLFilePath, header=None, skipinitialspace=True, 
 									names=["DateTime", "Easting", "Northing", "Height", "LineName"], parse_dates=["DateTime"])
+
+		
 
 		logging.info(f'Reading Fix Position file: {SPLFilePath}') 
 

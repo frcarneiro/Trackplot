@@ -39,7 +39,7 @@ def make_gooey_config(program_name: str) -> dict:
                 'menuTitle': 'About',
                 'name': 'trackplot',
                 'description': 'Workflow Automation for trackplot MBES Data',
-                'version': '0.1.0',
+                'version': 'Cedric_beta_version',
                 'copyright': '2021',
                 'website': 'https://github.com/fugro/furgo.hurricane.seabed2030',
                 'developer': 'eduardo.pogeto@fugro.com, fernando.carneiro@fugro.com, patrice.ponchant@fugro.com',
@@ -120,8 +120,8 @@ def trackplot_gui(mode: str) -> Namespace:
         gooey_options={'visible': stored_visible.get('vessel_name')})
     mainopt.add_argument(
         'project_id',       
-        metavar='Project ID', 
-        help='Transit identification',
+        metavar='Shape file name', 
+        help='Shape file name',
         default=stored_args.get('project_id'),
         widget='TextField',
         gooey_options={'visible': stored_visible.get('project_id')})
