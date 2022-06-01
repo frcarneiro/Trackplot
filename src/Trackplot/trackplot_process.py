@@ -84,9 +84,13 @@ def process(arguments: trackplotArguments, list_proc, skip_list) -> None:
 	print(interval)
 	#print(u'\xb0')
 
+
+	chunksize = 100000
+	df = pd.read_csv(list_proc, header=None, names=['PathCheck'],encoding='ISO-8859-1', chunksize=chunksize, iterator=True)
+	dfver = pd.concat(df, ignore_index=True)
 	
 
-	dfver = pd.read_csv(list_proc, header=None, names=['PathCheck'],encoding='ISO-8859-1')
+	# dfver = pd.read_csv(list_proc, header=None, names=['PathCheck'],encoding='ISO-8859-1')
 	dfver.drop_duplicates(keep='last', inplace=True)
 	dfver.to_csv(list_proc, header=False, index=False)
 	s1 = set(dfver['PathCheck'].tolist())
@@ -179,6 +183,8 @@ def process(arguments: trackplotArguments, list_proc, skip_list) -> None:
 		CRP_point_concat=pd.concat(CRP_points)
 		CRP_decimate_concat=pd.concat(CRP_decimate)
 		CRP_line_concat=pd.concat(CRP_Lines)
+		CRP_decimate_concat.drop_duplicates(subset="LineName",inplace=True,keep="last")
+		CRP_line_concat.drop_duplicates(subset="LineName",inplace=True,keep="last")
 
 		CRP_line_concat['Block']=""
 		CRP_line_concat=CRP_line_concat[['Date','Time','Easting','Northing','Height','LineName','Vessel','Block','Length','geometry']]
