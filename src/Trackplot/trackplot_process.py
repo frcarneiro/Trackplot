@@ -79,7 +79,7 @@ def process(arguments: trackplotArguments, list_proc, skip_list) -> None:
 	CRP_points=[]
 	CRP_decimate=[]
 	CRP_line = pd.DataFrame(columns=['Date','Time', 'Easting', 'Northing', 'Height', 'LineName'])
-	tolerance=0.3
+	tolerance=5
 	interval=int(arguments.interval)
 	print(interval)
 	#print(u'\xb0')
@@ -134,9 +134,13 @@ def process(arguments: trackplotArguments, list_proc, skip_list) -> None:
 				#Calculating point to point distance 
 				CRP_shp_points['distance']=CRP_shp_points.distance(CRP_shp_points.shift()).cumsum()
 
+
+
 				#Creating a decimate point file every tolerance meters
 				decimate_CRP=CRP_shp_points[CRP_shp_points['distance']%interval < tolerance]
+
 				decimate_CRP['distance']=decimate_CRP['distance'].astype(int)
+				
 				decimate_CRP.drop_duplicates(subset='distance',keep='first',inplace=True)
 
 				#Appending last point on deciamte file
@@ -148,7 +152,7 @@ def process(arguments: trackplotArguments, list_proc, skip_list) -> None:
 				CRP_df.drop('geometry',axis=1,inplace=True)
 
 				#Converting point file to line file
-				line = LineString( [[a.x, a.y] for a in CRP_shp_points.geometry.values])
+				line = LineString( [[a.x, a.y] for a in decimate_CRP.geometry.values])
 
 				#First line information for line attribute table
 				CRP_line=CRP_df.iloc[:1]
