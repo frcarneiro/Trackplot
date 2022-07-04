@@ -92,7 +92,7 @@ def process(arguments: trackplotArguments, list_proc, skip_list) -> None:
 
 	# dfver = pd.read_csv(list_proc, header=None, names=['PathCheck'],encoding='ISO-8859-1')
 	dfver.drop_duplicates(keep='last', inplace=True)
-	dfver.to_csv(list_proc, header=False, index=False,encoding='ISO-8859-1')
+	dfver.to_csv(list_proc, header=False, index=False)
 	s1 = set(dfver['PathCheck'].tolist())
 	
 	tmp_spl = set(path_spl)
@@ -152,7 +152,7 @@ def process(arguments: trackplotArguments, list_proc, skip_list) -> None:
 				CRP_df.drop('geometry',axis=1,inplace=True)
 
 				#Converting point file to line file
-				line = LineString( [[a.x, a.y] for a in decimate_CRP.geometry.values])
+				line = LineString( [[a.x, a.y] for a in CRP_shp_points.geometry.values])
 
 				#First line information for line attribute table
 				CRP_line=CRP_df.iloc[:1]

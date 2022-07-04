@@ -1,7 +1,7 @@
 {
  "spl_folder": "S:\\JOBS\\2022\\00200378_Vineyard_WES\\_B2B_FromVessel\\01_Nav\\Starfix_Logging\\RawData",
  "nav_pattern": "Westerly-CRP-Position.fbf",
- "trackplot_output_folder": "C:\\Users\\fernando.carneiro\\Documents\\Fernando\\Trackplot\\Vineyard_decimate",
+ "trackplot_output_folder": "C:\\Users\\fernando.carneiro\\Documents\\Fernando\\Trackplot\\Vineyard_new",
  "vessel_name": "Westerly - WES",
  "project_id": "Vineyard",
  "interval": "10"
