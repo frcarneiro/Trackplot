@@ -98,7 +98,7 @@ def trackplot_gui(mode: str) -> Namespace:
 
     mainopt.add_argument(
         'nav_pattern',
-        metavar='CRP Position File Name', 
+        metavar='CRP Position File Name NO EXTENSION', 
         widget='TextField',
         default=stored_args.get('nav_pattern'),
         help='SPL position file.',

@@ -11,6 +11,7 @@ import time
 import pathlib
 from typing import Callable, ClassVar, Dict, List, Optional, Tuple
 from collections import defaultdict
+import typing
 
 ##########################################################
 #                     Looging Function                   #
@@ -39,6 +40,13 @@ def trackplot_logger(message: str, type: str = 'info', noprint: bool = False) ->
     elif type == 'success':
         if noprint==False: print(stylize(f'SUCCESS: {message}', fg('#648FFF')), flush=True)
         logging.info(message.replace("\n", " "))
+
+class EndsWithFilter:
+    def __init__(self, *patterns: typing.Iterable[str]):
+        self.patterns = tuple(s.lower() for s in patterns)
+
+    def __call__(self, src_path, *args, **kwargs):
+        return src_path.lower().endswith(self.patterns)
 
 ##########################################################
 #                     Timer Function                     #

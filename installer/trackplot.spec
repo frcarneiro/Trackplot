@@ -32,7 +32,7 @@ hidden_imports = [
     'cftime',
 ]
 
-version='Cedric_beta_version'
+version='NoExtension'
 # Fernando
 sources_root = os.path.join(os.environ["USERPROFILE"], 'Documents\\GitHub\\Trackplot')
 venv_root = os.path.join(os.environ["USERPROFILE"], 'Documents\\python_env\\trackplot')

@@ -31,6 +31,8 @@ import subprocess
 from colored import stylize, attr, fg
 import fiona
 fiona.supported_drivers 
+from utils import EndsWithFilter
+import typing
 
 
 
@@ -67,13 +69,37 @@ def trackplot_prestart(args: Namespace, mode:str) -> trackplotArguments:
     
     return arguments, list_proc, skip_list
 
+def walk_folder(*, path: str, file_filter: callable, exclude: set[str] = set()) -> typing.Iterable[str]:
+    for root, _, files in os.walk(path, topdown=True):
+        for filename in files:
+            if file_filter(filename.lower()):
+                filepath = os.path.join(root, filename)
+                if filepath not in exclude:
+                    yield filepath
+
 ##########################################################
 #           Offline Data Processing Functions            #
 ##########################################################
 def process(arguments: trackplotArguments, list_proc, skip_list) -> None:
 	exclude=[]
+	
 	path_spl= listFile(arguments.spl_folder,arguments.nav_pattern, set(exclude))
-	#print(path_spl)
+	# path_spl = list(walk_folder(path=arguments.spl_folder,
+	# 					file_filter=EndsWithFilter(
+	# 								arguments.nav_pattern.lower() + '.fbf',
+	# 								arguments.nav_pattern.lower() + '.fbz',
+	# 								arguments.nav_pattern.lower() + '.pos'),
+	# 					exclude=exclude))
+
+	# df = pd.DataFrame(path_spl, columns=['Path'])
+
+	# df.to_csv('path_spl_new.csv', index=False)
+
+	df_old = pd.DataFrame(path_spl, columns=['Path'])
+
+	df_old.to_csv('path_spl_old.csv', index=False)
+
+	print(arguments.nav_pattern)
 	
 	CRP_Lines=[]
 	CRP_points=[]
@@ -308,7 +334,7 @@ def listFile(folder, ext, exclude):
     for root, dirs, files in os.walk(folder, topdown=True):
         dirs[:] = [d for d in dirs if d not in exclude]
         for filename in files:
-            if filename.endswith(ext):
+            if filename in ext:
                 filepath = os.path.join(root, filename)
                 ls.append(filepath)  
     return ls

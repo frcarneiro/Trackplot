@@ -1,0 +1,9 @@
+{
+ "spl_folder": true,
+ "spl_folder2": false,
+ "nav_pattern": true,
+ "trackplot_output_folder": true,
+ "vessel_name": true,
+ "project_id":true,
+ "interval": true
+}
